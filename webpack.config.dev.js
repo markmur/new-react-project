@@ -9,16 +9,16 @@ module.exports = {
 
   entry: [
     'babel-polyfill',
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/dev-server',
     './src/main.js',
   ],
 
   output: {
-    path: path.join(__dirname, '/public/dist/'),
+    path: path.join(__dirname, '/dist/'),
     filename: 'bundle.js',
     pathInfo: true,
-    publicPath: 'http://localhost:8080/dist/',
+    publicPath: 'http://localhost:3000/dist/',
     hot: true,
   },
 
@@ -49,6 +49,10 @@ module.exports = {
       {
         test: /\.(ttf|eot|svg|woff)(\?[a-z0-9]+)?$/, // font files
         loader: 'file-loader?name=[path][name].[ext]',
+      },
+      {
+        test: /\.json$/, // font files
+        loader: 'json',
       },
       {
         test: /\.(js|jsx)?$/, // react files
