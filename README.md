@@ -1,12 +1,11 @@
 # New React Project
 
-A scaffolding tool for generating simple [React](https://facebook.github.io/react/) apps with some default.
+A tool for scaffolding [React](https://facebook.github.io/react/) apps with Webpack.
 
 ## Includes
 
-* [Sails](http://sailsjs.org) v0.12.2
-* [React](https://facebook.github.io/react/) v15.0.1
-* [Babel with ES2015](https://babeljs.io)
+* [React](https://facebook.github.io/react/)
+* [Babel (ES2015)](https://babeljs.io)
 * [React Router](https://github.com/reactjs/react-router)
 * [Sass](https://github.com/jtangelder/sass-loader)
 * [Autoprefixer](https://github.com/passy/autoprefixer-loader)
@@ -18,6 +17,7 @@ ___
 
 ```shell
 git clone https://github.com/markmur/new-react-project.git
+
 cd new-react-project
 npm install
 ```
