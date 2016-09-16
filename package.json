@@ -1,8 +1,8 @@
 {
-  "name": "sails-react-webpack",
+  "name": "new-react-project",
   "private": false,
   "version": "0.1.0",
-  "description": "A Sails, React & Webpack boilerplate",
+  "description": "Scaffold a new react project and instantly start building something.",
   "engines": {
     "node": "5.8.0",
     "npm": ">= 3.7.3"
@@ -26,7 +26,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/markmur/sails-react-webpack.git"
+    "url": "git://github.com/markmur/new-react-project.git"
   },
   "author": "Mark Murray <mark@boxfish.com>",
   "license": "MIT",
