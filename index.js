@@ -9,7 +9,7 @@ const args = process.argv;
 const name = args[2];
 
 if (!name) {
-  console.error('Please enter a name for your project. `nrp ProjectName`');
+  console.error('You must enter a name for your project. `nrp ProjectName`'.yellow);
   process.exit(0);
 }
 
