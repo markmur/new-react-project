@@ -13,18 +13,27 @@ A tool for scaffolding [React](https://facebook.github.io/react/) apps with Webp
 
 ___
 
-### Clone
+### Usage
+
+Install globally:
 
 ```shell
-git clone https://github.com/markmur/new-react-project.git
+$ npm install -g new-react-project
+```
 
-cd new-react-project
-npm install
+```bash
+$ nrp ProjectName
+```
+
+or
+
+```bash
+$ new-react-project ProjectName
 ```
 
 ___
 
-### Run (development)
+### Run (Development)
 
 `npm start`
 
