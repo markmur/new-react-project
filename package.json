@@ -19,6 +19,7 @@
     "scaffold"
   ],
   "dependencies": {
+    "babel-core": "^6.17.0",
     "colors": "^1.1.2",
     "inquirer": "^1.1.3",
     "ncp": "^2.0.0"
