@@ -1,69 +1,97 @@
 const path = require('path');
 const webpack = require('webpack');
-const NODE_ENV = process.env.NODE_ENV;
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  target: 'web',
+  context: path.resolve(__dirname, 'src'),
 
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-source-map',
 
   entry: [
     'babel-polyfill',
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/dev-server',
-    './src/main.js',
+
+    'react-hot-loader/patch',
+     // activate HMR for React
+
+    'webpack-dev-server/client?http://localhost:8080',
+    // bundle the client for webpack-dev-server
+    // and connect to the provided endpoint
+
+    'webpack/hot/only-dev-server',
+    // bundle the client for hot reloading
+    // only- means to only hot reload for successful updates
+
+    './main.js'
   ],
 
   output: {
-    path: path.join(__dirname, '/dist/'),
     filename: 'bundle.js',
-    pathInfo: true,
-    publicPath: 'http://localhost:3000/dist/',
+    // the output bundle
+
+    path: path.resolve(__dirname, 'dist'),
+
+    publicPath: '/'
+    // necessary for HMR to know where to load the hot update chunks
+  },
+
+  devServer: {
     hot: true,
+    // enable HMR on the server
+
+    contentBase: path.resolve(__dirname, 'dist'),
+    // match the output path
+
+    publicPath: '/'
+    // match the output `publicPath`
   },
 
   resolve: {
-    root: path.join(__dirname, ''),
-    modulesDirectories: [
-      'node_modules',
-      'src',
-      'src/components',
-      'src/styles',
+    modules: [
+       path.resolve(__dirname, 'src'),
+      'node_modules'
     ],
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.scss', '.css', '.json'],
+    alias: {
+      components: path.resolve(__dirname, 'src/components')
+    },
   },
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
-      __ENV__: NODE_ENV,
+      __DEVELOPMENT__: true
     }),
+    new HtmlWebpackPlugin({
+      title: 'New React Project',
+      template: 'index.ejs'
+    })
   ],
 
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.scss$/, // sass files
-        loader: 'style!css!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded',
+        test: /\.scss$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'autoprefixer-loader', options: { browsers: 'last 2 versions' } },
+          { loader: 'sass-loader', options: { outputStyle: 'expanded' } }
+        ]
       },
       {
-        test: /\.(ttf|eot|svg|woff)(\?[a-z0-9]+)?$/, // font files
-        loader: 'file-loader?name=[path][name].[ext]',
+        test: /\.(ttf|eot|svg|woff)(\?[a-z0-9]+)?$/,
+        use: [
+          { loader: 'file-loader?name=[path][name].[ext]' }
+        ]
       },
       {
-        test: /\.json$/, // font files
-        loader: 'json',
-      },
-      {
-        test: /\.(js|jsx)?$/, // react files
+        test: /\.(js|jsx)?$/,
         exclude: /node_modules/,
-        loaders: ['react-hot', 'babel?' + JSON.stringify({
-          presets: ['es2015', 'stage-0', 'react'],
-          plugins: ['transform-decorators-legacy']
-        })],
+        use: [{
+          loader: 'babel-loader'
+        }]
       }
-    ],
-
-    noParse: /\.min\.js/,
-  },
+    ]
+  }
 };
