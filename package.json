@@ -1,7 +1,7 @@
 {
   "name": "new-react-project",
   "private": false,
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Scaffold a new react project and instantly start building something.",
   "preferGlobal": true,
   "bin": {
