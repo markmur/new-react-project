@@ -1,96 +1,80 @@
 const path = require('path');
 const webpack = require('webpack');
-const NODE_ENV = process.env.NODE_ENV;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  devtool: '#source-map',
+  context: path.resolve(__dirname, 'src'),
 
-  // Capture timing information for each module
-  profile: false,
-
-  // Switch loaders to debug mode
-  debug: false,
-
-  // Report the first error as a hard error instead of tolerating it
-  bail: true,
+  devtool: 'source-map',
 
   entry: [
     'babel-polyfill',
-    './src/main.js',
+    './main.js',
   ],
 
   output: {
-    path: 'dist/',
-    pathInfo: true,
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     filename: 'bundle.[hash].min.js',
   },
 
   resolve: {
-    root: path.join(__dirname, ''),
-    modulesDirectories: [
-      'node_modules',
-      'src/',
-      'src/components',
-      'src/styles'
+    modules: [
+       path.resolve(__dirname, 'src'),
+      'node_modules'
     ],
-    extensions: ['', '.js', '.jsx'],
-  },
-
-  resolveLoader: {
-    root: path.join(__dirname, 'node_modules'),
+    extensions: ['.js', '.jsx', '.scss', '.css', '.json'],
+    alias: {
+      components: path.resolve(__dirname, 'src/components')
+    },
   },
 
   plugins: [
+    new ExtractTextPlugin('style.css'),
     new CleanWebpackPlugin(['dist'], {
       verbose: false,
       dry: false
     }),
-    new webpack.optimize.OccurenceOrderPlugin(true),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      output: {
-        comments: false,
-      },
-      compress: {
-        warnings: false,
-        screw_ie8: true,
-      },
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
     }),
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
+      __DEVELOPMENT__: false,
+      'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new HtmlWebpackPlugin({
-      title: 'React'
+      title: 'New React Project',
+      template: 'index.ejs'
     })
   ],
 
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.scss$/, // sass files
-        loader: 'style!css!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded',
+        test: /\.scss$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'autoprefixer-loader', options: { browsers: 'last 2 versions' } },
+          { loader: 'sass-loader', options: { outputStyle: 'expanded' } }
+        ]
       },
       {
-        test: /\.(ttf|eot|svg|woff)(\?[a-z0-9]+)?$/, // fonts files
-        loader: 'file-loader?name=[path][name].[ext]',
+        test: /\.(ttf|eot|svg|woff)(\?[a-z0-9]+)?$/,
+        use: [
+          { loader: 'file-loader?name=[path][name].[ext]' }
+        ]
       },
       {
-        test: /\.json$/,
-        loader: 'json'
-      },
-      {
-        test: /\.(js|jsx)?$/, // js files
+        test: /\.(js|jsx)?$/,
         exclude: /node_modules/,
-        loaders: ['babel'],
-        include: path.join(__dirname, 'src'),
-      },
-    ],
-
-    noParse: /\.min\.js/,
-  },
+        use: [{
+          loader: 'babel-loader'
+        }]
+      }
+    ]
+  }
 };

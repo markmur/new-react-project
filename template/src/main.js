@@ -1,17 +1,35 @@
 import 'styles/app.scss';
 
 import React from 'react';
-import { render } from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router';
+import { AppContainer } from 'react-hot-loader';
+import ReactDOM from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom';
 
-import App from 'components/App/App';
-import NotFound from 'components/NotFound/NotFound';
+import { App } from 'components';
 
 const routes = (
-  <Router history={browserHistory}>
+  <Router>
     <Route path="/" component={App} />
-    <Route path="/*" component={NotFound} />
   </Router>
 );
 
-render(routes, document.getElementById('app'));
+const outlet = document.getElementById('app')
+
+const render = () => {
+  ReactDOM.render(
+    <AppContainer>
+      {routes}
+    </AppContainer>,
+    outlet
+  );
+};
+
+render();
+
+// Hot Module Replacement API
+if (module.hot) {
+  module.hot.accept(render);
+}

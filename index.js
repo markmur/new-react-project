@@ -34,7 +34,7 @@ fs.mkdir(name, (fsError) => {
     console.log();
     console.log('Next Steps:'.blue);
     console.log(`   cd ${name}`);
-    console.log(`   npm install`);
+    console.log(`   npm install (or yarn install)`);
     console.log();
     console.log('npm start'.yellow);
     console.log('   Start the webpack dev server');
