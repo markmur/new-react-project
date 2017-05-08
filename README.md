@@ -5,11 +5,12 @@ A tool for scaffolding [React](https://facebook.github.io/react/) apps with Webp
 ## Includes
 
 * [React](https://facebook.github.io/react/)
+* [React Router V4](https://github.com/reactjs/react-router)
+* [Webpack 2](https://github.com/webpack/webpack)
 * [Babel (ES2015)](https://babeljs.io)
-* [React Router](https://github.com/reactjs/react-router)
 * [Sass](https://github.com/jtangelder/sass-loader)
 * [Autoprefixer](https://github.com/passy/autoprefixer-loader)
-* [React Hot Loader](https://github.com/gaearon/react-hot-loader)
+* [React Hot Loader V3](https://github.com/gaearon/react-hot-loader)
 
 ___
 
@@ -18,17 +19,17 @@ ___
 Install globally:
 
 ```shell
-$ npm install -g new-react-project
+npm install -g new-react-project
 ```
 
 ```bash
-$ nrp ProjectName
+new-react-project ProjectName
 ```
 
 or
 
 ```bash
-$ new-react-project ProjectName
+nrp ProjectName
 ```
 
 ___
@@ -37,7 +38,7 @@ ___
 
 `npm start`
 
-To view your app, go to `http://localhost:3000` in your browser.
+To view your app, go to `http://localhost:8080` in your browser.
 ___
 
 ### Run (Production)
